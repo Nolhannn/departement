@@ -3,15 +3,27 @@ import BoutonDep from '../outil/boutonDep'
 import Rep from '../outil/counter'
 export  default async function Departement(
 ){
-  const apiDepartement = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=20",
+  
+  const apiDepartement = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10",
     {headers:{
-      Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0NzY2MDg4OCwiZXhwIjoxNzQ4MDkyODg4fQ._VQ13I_GkX-K5Q32j8q5xOMcs0O-aMp79BP9MWczI_4"
+      Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODE2NDEzNCwiZXhwIjoxNzQ4NTk2MTM0fQ.Ipi0GxLPi-uWBx2QAvZe8HQjou6wNj3rwXscolpv1hA"
     }}
     )
     const response = await apiDepartement.json()
     
-  let isAdding=true 
  let count = 0
+ function pageGen(id:number){
+  let elems =""
+  for(let i=0;i<id;i=i+10){
+    console.log(i)
+    elems+=<button>{(i+10/10)}</button>
+  }
+  const { DOMParser } = require('xmldom');
+
+  return(
+   new DOMParser().parseFromString(elems, 'text/xml')
+  )
+ }
   return (
     <>
       <div className=" bg-white mt-10 min-h-100"> 
@@ -26,14 +38,18 @@ export  default async function Departement(
               <p className=" text-black p-5 w-full">
                 <Rep idProfil={x.id}></Rep>
               </p>
-              </div>)}
+              </div>
+              )}
             
       )}
+      <div className="text-black justify-items-center">
+           <p>Page :</p> 
+           {response.meta.totalItems>10 ? (response.meta.totalItems)
+           :"1/1"}
+          </div>
        </div>
-      {
-      isAdding==true?"dd":""
-      }
-            </div>
+          
+     </div>
     </>
     
 
