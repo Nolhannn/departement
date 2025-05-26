@@ -11,7 +11,6 @@ export default function Arrow({redirectManual}:{redirectManual :boolean}){
   useEffect(
     ()=>{
       if(redirectManual===true && admin===true){ //ici que le cas avec admin
-        console.log("dd")
       changeRH()
       changeAdmin()
     }
@@ -58,7 +57,12 @@ export default function Arrow({redirectManual}:{redirectManual :boolean}){
   const propsRc={
     etatRc:recrut
   }
-  const [rh,setRH] = useState(false)  
+  let pa = window.location.pathname.split("/").findLast((element) => element)
+  const [rh,setRH] = useState(pa==='departement'||"profil"||"collaborateurs"?true:false)  
+    console.log((pa==='departement'||"profil"||"collaborateurs")+" RH")
+  useEffect(()=>{
+    changeRH()
+  },[])
   function changeRH(){
     setRH(y=>{
       return y=!y
@@ -66,7 +70,7 @@ export default function Arrow({redirectManual}:{redirectManual :boolean}){
   )
   
   }
-  if(rh===true){
+  if(rh==true){
     return <>
            <button onClick={()=>changeRH()} className="cursor-pointer flex gap-5 flex"> 
               <p className="text-blue-500">Ressources Humaines</p>

@@ -21,9 +21,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-const pathname = usePathname()
- let variableAccess =  pathname=="/dashboard/human-ressources/administration/departement"?true:false
-  
+  let pa = window.location.pathname.split("/").findLast((element) => element)
+ let variableAccess =  pa=="departement"||"collaborateurs"||"profil"?true:false
+
   return (
     <html lang="en" className="h-full">
       <body
