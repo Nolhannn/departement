@@ -1,6 +1,6 @@
 "use client"
-import { FormEvent, useState } from "react"
-import ListeDepartement from "../api/departement"
+
+import { FormEvent, useState } from "react" 
 export default function BoutonPro(
   liste : {
     liste : any

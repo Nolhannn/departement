@@ -34,8 +34,6 @@ export  default function Departement(){
         )
         const response = await apiDepartement.json()
         setDepart(response)
-         console.log(response)
-      
     }catch(err){
       if(err instanceof Error){
         console.log(err)
