@@ -64,12 +64,12 @@ export default function BoutonDep(){
         <button onClick={()=>{openWindow(true)}}><img className="border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500" src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40"/></button>
       </div>
         <form action="" onSubmit={ submitting}>
-          <div className={"text-white right-0 top-1/2 fixed border p-5 flex flex-col items-center bg-gray-500 "+( visibility?"":"hidden")}>
-            <p className="text-white" >Nouveau département :</p>
-            <input required onChange={(event)=>setDep(event.target.value)} name="name" className="border text-black bg-white p-1" type="text" />
+          <div className={"text-white right-0 top-1/2 fixed border rounded border-gray-300 p-5 shadow-lg shadow-gray-500 flex flex-col items-center bg-white "+( visibility?"":"hidden")}>
+            <p className="text-black" >Nouveau département :</p>
+            <input required onChange={(event)=>setDep(event.target.value)} name="name" className="border rounded  text-black bg-white p-1" type="text" />
             <div className="flex flex-row gap-5 pt-5">
               <button type="button" onClick={()=>{openWindow(false)}} className="border text-black bg-white p-1">Quitter</button>
-              <button type="submit" className="border text-black bg-white p-1">Ajouter</button>
+              <button type="submit" className="border rounded text-wite bg-(--currentColor) p-1">Ajouter</button>
               
             </div>
             {msg!=""&&<p>{msg}</p>}
