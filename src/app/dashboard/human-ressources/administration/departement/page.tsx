@@ -5,6 +5,8 @@ import   {DepApi} from '../api/dep'
 import { depNav } from '../api/depNav'
 import Rep from '../outil/counter'
 import { Suspense, useEffect, useState } from 'react'
+import Delete from '../outil/delete'
+import Modification from '../outil/modification'
 
 type Depart = {
   id : number
@@ -47,19 +49,31 @@ export  default function Departement(){
   if(loading) return "loading..."
   return (
     <>
-      <div className=" bg-white mt-10 min-h-100"> 
-      <div className="flex relative">
+      <div className="border shadow-md shadow-gray-500 h-fit max-h-[calc(100vh-11rem)]"> 
+      
+      <div className=" ">
+        <div className="">
         <BoutonDep/>
-      </div>  
-      <div className=" p-5 w-full">
-        <Suspense fallback="loading">
+      </div> 
+       <Suspense fallback="loading">
         {<>
               {depart.data.map((x:any)=>{return( 
-                        <div className="flex">
-                            <p className="text-black p-5 w-full">{x.name}</p>
-                            <p className=" text-black p-5 w-full">
-                              <Rep nbpage={nb} idProfil={x.id}></Rep>
+                        <div className="border border-[#BFBFBF80] false flex justify-between hover:bg-opacity-60 duration-100 odd:bg-gray-100 even:bg-gray-150 p-3 border-0 text-smaller sm:text-large">
+                            <div className="w-2/5">
+                              <p className="text-black p-1 w-full">{x.name}</p>
+                            </div>
+                            <div className="w-2/5">
+                            <p className="text-black text-center p-1 w-full">
+                                <Rep nbpage={nb} idProfil={x.id}></Rep>
                             </p>
+                            </div>
+                              
+                            <div className="w-1/5 text-right">
+                            <div className="flex items-center justify-end space-x-2 !mr-2">
+                                  <Modification depID={x.id} depName={x.name}/>
+                                  <Delete depID={x.id} depName={x.name}/>
+                            </div>
+                            </div>
                             </div>
                             )}
                           
@@ -68,13 +82,14 @@ export  default function Departement(){
               </>} 
             </Suspense>          
        </div>
-      <div className="text-black justify-center items-center gap-5 flex">
-
+      <div className="text-black justify-center items-center gap-5 flex flex-col">
+          <p>Page : {nb}</p> 
         {  depNav >10  ?
             <Navigation nextPage={next}/>:"" }
           
       </div>
      </div>
+     
     </>
     
 

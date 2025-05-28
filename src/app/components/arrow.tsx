@@ -73,7 +73,7 @@ export default function Arrow({redirectManual}:{redirectManual :boolean}){
   if(rh==true){
     return <>
            <button onClick={()=>changeRH()} className="cursor-pointer flex gap-5 flex"> 
-              <p className="text-blue-500">Ressources Humaines</p>
+              <p className="text-(--currentColor)">Ressources Humaines</p>
               <img src="/arrow-up.svg" alt="arrow" width="20" height="20" />
             </button>
             <button onClick={()=>changeAdmin()} className="cursor-pointer flex gap-5">

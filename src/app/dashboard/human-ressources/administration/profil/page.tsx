@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react"
 import List from "../api/departement"
 import { proNav } from "../api/proNav"
-import NavigationPro from "../outil/navigationPro"
+import NavigationPro from "../outil/navigationPro" 
+import DeletePro from "../outil/deletePro"
+import ModificationPro from "../outil/modificationPro"
 type Profil = {
   id : number
   name : string
@@ -46,24 +48,40 @@ export default  function Profil(){
     if(loading) return "loading..."
     return (
       <>
-        <div className=" bg-white mt-10 min-h-100"> 
-        <div className="flex relative">
+        <div className="w-full  border shadow-md shadow-gray-500  h-[calc(100vh-11rem)]"> 
+        <div className="">
           <List/>
         </div>
-        <div className=" p-5 w-full">
-            {
+        <div className="w-full mt-4 overflow-y-scroll">
+            
+        {
           profi.data.map((x:any)=>{return( 
-            <div className="flex">
+            <div className="flex flex-row">
+              <div className="w-2/5">
                 <p className="text-black p-5 w-full">{x.name}</p>
+              </div>
+              <div className="w-2/5">
                 <p className=" text-black p-5 w-full">
                 {x.department.name}
                 </p>
-                </div>)}
+              </div>
+                <div className="w-1/5 flex items-center justify-end space-x-2 !mr-2">
+                      <ModificationPro proID={x.id} proName={x.name} depID={x.department.id} depName={x.department.name}/>
+                      <DeletePro proID={x.id} proName={x.name} />
+                </div>
+              </div>)}
               
         )}
+         
          </div>
+         
+        
+        <div className="text-black justify-center items-center gap-5 flex flex-col">
+          <p>Page : {nb}</p> 
         <NavigationPro nextPage={next}/>
-              </div>
+
+         </div>
+         </div>
       </>
       
   

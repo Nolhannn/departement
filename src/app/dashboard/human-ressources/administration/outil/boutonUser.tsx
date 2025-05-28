@@ -50,7 +50,7 @@ export default function BoutonUser(
   return(
     <>
         <p className="text-black p-5 w-full font-bold">Collaborateurs</p>
-        <button onClick={()=>{openWindow(true)}}><img src="/plus-svgrepo-com.svg" alt="plus" width="20" height="20"/></button>
+        <button onClick={()=>{openWindow(true)}}><img src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40" className="cursor-pointer hover:scale-110 duration-300 border p-2 rounded-full shadow-md shadow-gray-500 fill-(--currentColor)"/></button>
         <form encType="multipart/form-data" action="" onSubmit={ submitting}>
           <div className={"text-white right-0 top-1/2 fixed border p-5 flex flex-col items-center bg-gray-500 "+( visibility?"":"hidden")}>
             <p className="text-white" >Nouveau collaborateur :</p>

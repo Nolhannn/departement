@@ -9,7 +9,7 @@ export default function NavAdministration({etatAd}:{etatAd :boolean}){
   }else{
     return <>
                 <img src="/symbole-administration-actif.svg" alt="administration logo" width="20" height="20" />
-                <p className="text-blue-500">Administration</p>
+                <p className="text-(--currentColor)">Administration</p>
           
           </>
   }

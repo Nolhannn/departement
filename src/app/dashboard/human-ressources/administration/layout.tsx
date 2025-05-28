@@ -8,27 +8,29 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const seletionnerColor = "p-2 rounded shadow-md shadow-gray-500 cursor-pointer text-center text-large sm:text-lg w-full  flex-1 text-[#fff] bg-[var(--currentColor)] font-semibold"
+  const regularColor = "p-2 bg-white rounded shadow-md shadow-gray-500 cursor-pointer text-center text-large sm:text-lg w-full  flex-1 text-gray-500"
   const router = useRouter()
    const [pa, setPa]  = useState(window.location.pathname.split("/").findLast((element) => element))
    function setter(go:string){
      if(go=="departement"){
-        setStyleDep(w=>{ return{...w, dep:"bg-white cursor-pointer text-blue-500 border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, dep:seletionnerColor}})
 
       }else{
-        setStyleDep(w=>{ return{...w, dep:"bg-white cursor-pointer border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, dep:regularColor}})
       }
       if(go=="profil"){
-        setStyleDep(w=>{ return{...w, pro:"bg-white cursor-pointer text-blue-500 border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, pro:seletionnerColor}})
 
       }else{
-        setStyleDep(w=>{ return{...w, pro:"bg-white cursor-pointer border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, pro:regularColor}})
 
       }
       if("collaborateurs"==go){
-        setStyleDep(w=>{ return{...w, collab:"bg-white cursor-pointer text-blue-500 border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, collab:seletionnerColor}})
         
       }else{
-        setStyleDep(w=>{ return{...w, collab:"bg-white cursor-pointer border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, collab:regularColor}})
       }
       router?.push('/dashboard/human-ressources/administration/'+go)
    }
@@ -41,44 +43,41 @@ const [styleDep,setStyleDep] = useState({
     })
     useEffect(
       ()=>{
-        console.log("fhbuvjdhnlsck,")
       if(pa=="departement"){
-        setStyleDep(w=>{ return{...w, dep:"bg-white cursor-pointer text-blue-500 border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, dep:seletionnerColor}})
         router?.push('/dashboard/human-ressources/administration/departement')
 
       }else{
-        setStyleDep(w=>{ return{...w, dep:"bg-white cursor-pointer border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, dep:regularColor}})
       }
       if(pa=="profil"){
-        setStyleDep(w=>{ return{...w, pro:"bg-white cursor-pointer text-blue-500 border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, pro:seletionnerColor}})
         router?.push('/dashboard/human-ressources/administration/profil')
 
       }else{
-        setStyleDep(w=>{ return{...w, pro:"bg-white cursor-pointer border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, pro:regularColor}})
 
       }
       if("collaborateurs"==pa){
-        setStyleDep(w=>{ return{...w, collab:"bg-white cursor-pointer text-blue-500 border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, collab:seletionnerColor}})
         router?.push('/dashboard/human-ressources/administration/collaborateurs')
         
       }else{
-        setStyleDep(w=>{ return{...w, collab:"bg-white cursor-pointer border-2 p-2 min-w-40 rounded shadow-md shadow-black"}})
+        setStyleDep(w=>{ return{...w, collab:regularColor}})
       }
 
       },[pa]
     )
   return (
-        <div className=" min-h-4/5 p-5 ">
-          <ul className="flex min-w fit gap-5 text-black">
-            <li><button onClick={()=>{   setter('departement')    
+        <div className="w-full h-fit ">
+          <ul className="flex justify-between gap-2 p-3 w-full flex-row">
+            <li className="flex-1"><button onClick={()=>{   setter('departement')    
 }} className={styleDep.dep}>Département</button></li>
-            <li><button onClick={()=>{       setter('profil')
+            <li className="flex-1 justify-center"><button onClick={()=>{       setter('profil')
 }} className={styleDep.pro}>Profil</button></li>
-            <li><button onClick={()=>{setter('collaborateurs')
+            <li className="flex-1"><button onClick={()=>{setter('collaborateurs')
 }} className={styleDep.collab}>Collaborateurs/users</button></li>
-            <li><button className="bg-white border-2 p-2 min-w-40 rounded shadow-md shadow-black">Exemple</button></li>
-            <li><button className="bg-white border-2 p-2 min-w-40 rounded shadow-md shadow-black">Configurations</button></li>
-          </ul>
+            </ul>
           {children}
         </div>
   );

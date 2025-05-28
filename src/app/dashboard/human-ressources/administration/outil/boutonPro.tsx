@@ -1,12 +1,14 @@
 "use client"
 
 import { FormEvent, useState } from "react" 
+import { proNav } from "../api/proNav"
 export default function BoutonPro(
   liste : {
     liste : any
+    nu:number
   }
 ){
- 
+ let nu=proNav
   const [dep, setDep]=useState("Autre")
   const [profil, setProfil]=useState("")
   const [idDep, setidDep]=useState("45")
@@ -46,20 +48,33 @@ export default function BoutonPro(
     
   //<WindowDep isVisible={visibility?"":"hidden"} leBooleen={visibility}/>
   const listeDep =  liste.liste.map((x:any)=>x.props)
+ 
   return(
-    <>
-        <p className="text-black p-5 w-full font-bold">Profil</p>
-        <p className="text-black p-5 w-full font-bold">Département</p>
-        <button onClick={()=>{openWindow(true)}}><img src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40"/></button>
+    <>    
+      <div className="border border-[#BFBFBF80] flex justify-between p-2 md:uppercase font-semibold text-sm bg-gray-50 rounded p-3 border-0 mb-4 font-bold text-smaller md:text-large uppercase font-sans">
+        <div className="flex ">
+                <p className="content-center text-black w-full font-bold">Profil</p>
+                <p className="bg-(--currentColor) rounded-full w-10 content-center h-7 text-center font-bold">{liste.nu}</p>
+        </div>
+        <div>
+        <p className="text-black w-full font-bold">Departement</p>
+        </div>
+        <div>
+        <p className="text-black w-full font-bold">Actions</p>
+        </div>
+      </div>
+
+      <div className="flex justify-between items-center mb-4">
+        <div></div>
+        <button onClick={()=>{openWindow(true)}}><img className="cursor-pointer hover:scale-110 duration-300 border p-2 rounded-full shadow-md shadow-gray-500 fill-(--currentColor)" src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40"/></button>
+      </div>
         <form action="" onSubmit={ submitting}>
           <div className={"text-white right-0 top-1/2 fixed border p-5 flex flex-col items-center bg-gray-500 "+( visibility?"":"hidden")}>
             <p className="text-white" >Nouveau Profil :</p>
             <input required onChange={(event)=>{
-            console.log("Value :" + event.target.value)
               setProfil(event.target.value)
               }} name="name" className="border text-black bg-white p-1" type="text" />
             <select name="departements" id="" onChange={(event)=>{
-              console.log("Id : "+event.target.selectedOptions[0].id )
               setDep(event.target.value)
               setidDep(event.target.selectedOptions[0].id )
               

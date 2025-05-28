@@ -9,7 +9,7 @@ export default function NavDisponibilite({etatDp}:{etatDp :boolean}){
   }else{
     return <>
                 <img src="/symbole-disponibilite-actif.svg" alt="disponibilite logo" width="20" height="20" />
-                <p className="text-blue-500">Disponibilité</p>
+                <p className="text-(--currentColor)">Disponibilité</p>
           
           </>
   }

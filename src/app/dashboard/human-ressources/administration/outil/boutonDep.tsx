@@ -1,8 +1,9 @@
 "use client"
 
 import { FormEvent, useState } from "react"
+import { depNav } from "../api/depNav"
 export default function BoutonDep(){
- 
+  const [refresh, setRefresh] = useState(false);   
   const [dep, setDep]=useState("")
   const [msg,setMsg]=useState('')
   const [visibility, setVisibility]=useState(false)
@@ -16,9 +17,8 @@ export default function BoutonDep(){
   const data ={name:''}
     async function submitting(event: FormEvent<HTMLFormElement>) {
       event.preventDefault()
-   
+      try{
       const formData = event.currentTarget.input
-      console.log(formData)
       const response = await fetch('https://dev.next.core.yatouze.com/api/yatouze/departments', {
         method: 'POST',
         headers:{
@@ -30,18 +30,39 @@ export default function BoutonDep(){
           name : dep
         }),
       })
-      // Handle response if necessary
       const newMsg = await response.json().catch(()=>{setMyMsg("Erreur")})
       newMsg ? setMyMsg(newMsg.message) : setMyMsg("Erreur")
+       } catch (error) {
+      
+    } finally {
+      openWindow(false)
+      window.location.href = "/departement";
+      setRefresh(!refresh); // This forces a re-render
+    }
+      // Handle response if necessary
+      
      
     }
   //<WindowDep isVisible={visibility?"":"hidden"} leBooleen={visibility}/>
     
   return(
     <>
-        <p className="text-black p-5 w-full font-bold">Département</p>
-        <p className="text-black p-5 w-full font-bold">Nombre d'employé</p>
-        <button onClick={()=>{openWindow(true)}}><img src="/plus-svgrepo-com.svg" alt="plus" width="20" height="20"/></button>
+      <div className="border border-[#BFBFBF80] flex justify-between p-2 md:uppercase font-semibold text-sm bg-gray-50 rounded p-3 border-0 mb-4 font-bold text-smaller md:text-large uppercase font-sans">
+        <div className="flex ">
+        <p className="content-center text-black w-full font-bold">Département</p>
+        <p className="bg-(--currentColor) rounded-full w-8 content-center h-7 text-center font-bold">{depNav}</p>
+        </div>
+        <div>
+        <p className="text-black w-full font-bold">Nombre d'employé</p>
+        </div>
+        <div>
+        <p className="text-black w-full font-bold">Actions</p>
+        </div>
+      </div>
+      <div className="flex justify-between items-center mb-4">
+        <div></div>
+        <button onClick={()=>{openWindow(true)}}><img className="border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500" src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40"/></button>
+      </div>
         <form action="" onSubmit={ submitting}>
           <div className={"text-white right-0 top-1/2 fixed border p-5 flex flex-col items-center bg-gray-500 "+( visibility?"":"hidden")}>
             <p className="text-white" >Nouveau département :</p>
@@ -54,6 +75,7 @@ export default function BoutonDep(){
             {msg!=""&&<p>{msg}</p>}
           </div>
         </form>
+       
          </>
   )     
 }

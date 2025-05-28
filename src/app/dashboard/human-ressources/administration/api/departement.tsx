@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import BoutonPro from "../outil/boutonPro"
+import { proNav } from "./proNav"
 export default function List(){
     const [depart,setDepart]=useState()
     const [loading,setLoading]=useState(true)
@@ -24,6 +25,6 @@ export default function List(){
       if(loading) return "loading..."
     
     return (
-      <BoutonPro liste={ depart.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
+      <BoutonPro nu={proNav} liste={ depart.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
     )
     }
