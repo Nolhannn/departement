@@ -13,6 +13,15 @@ export default  function Profil(){
   const [nb,setNb]=useState(1)
     const [profi,setProfi]=useState<Profil[]>([])
     const [loading, setLoading] =useState(true)
+  const [active,setActive] = useState("pointer-events-auto ")
+    
+  function actionOn(x:boolean){
+    if(x==true){
+    setActive(" pointer-events-none fill-(--currentColorOpa)")
+  }else{
+    setActive(" pointer-events-auto ")
+  }
+  }
     function next(n:string){
       if(n==="next"){
       if(nb<Math.ceil(proNav/10))
@@ -28,7 +37,7 @@ export default  function Profil(){
           try{
           let apiProfil = await fetch("https://dev.next.core.yatouze.com/api/yatouze/profiles?size=10&page="+nb,
           {headers:{
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODE2NDEzNCwiZXhwIjoxNzQ4NTk2MTM0fQ.Ipi0GxLPi-uWBx2QAvZe8HQjou6wNj3rwXscolpv1hA"
+            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
           }}
           )
           const response = await apiProfil.json()
@@ -50,7 +59,7 @@ export default  function Profil(){
       <>
         <div className="w-full  border shadow-md shadow-gray-500  h-[calc(100vh-11rem)]"> 
         <div className="">
-          <List/>
+          <List fct={actionOn} active={active}/>
         </div>
         <div className="w-full mt-4 overflow-y-scroll">
             
@@ -65,9 +74,9 @@ export default  function Profil(){
                 {x.department.name}
                 </p>
               </div>
-                <div className="w-1/5 flex items-center justify-end space-x-2 !mr-2">
-                      <ModificationPro proID={x.id} proName={x.name} depID={x.department.id} depName={x.department.name}/>
-                      <DeletePro proID={x.id} proName={x.name} />
+                <div className={"w-1/5 flex items-center justify-end space-x-2 !mr-2 "}>
+                      <ModificationPro active={active} proID={x.id} proName={x.name} depID={x.department.id} depName={x.department.name} fct={actionOn}/>
+                      <DeletePro fct={actionOn} active={active} proID={x.id} proName={x.name} />
                 </div>
               </div>)}
               

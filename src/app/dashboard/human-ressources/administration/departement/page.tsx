@@ -16,6 +16,15 @@ export  default function Departement(){
   const [nb,setNb]=useState(1)
   const [depart,setDepart]=useState<Depart[]>([])
   const [loading, setLoading] =useState(true)
+   const [active,setActive] = useState("pointer-events-auto")
+    
+  function actionOn(x:boolean){
+    if(x==true){
+    setActive(" pointer-events-none fill-(--currentColorOpa)")
+  }else{
+    setActive(" pointer-events-auto ")
+  }
+  }
   function next(n:string){
     if(n==="next"){
     if(nb<Math.ceil(depNav/10))
@@ -31,7 +40,7 @@ export  default function Departement(){
         try{
         let apiDepartement = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10&page="+nb,
         {headers:{
-          Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODE2NDEzNCwiZXhwIjoxNzQ4NTk2MTM0fQ.Ipi0GxLPi-uWBx2QAvZe8HQjou6wNj3rwXscolpv1hA"
+          Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
         }}
         )
         const response = await apiDepartement.json()
@@ -53,7 +62,7 @@ export  default function Departement(){
       
       <div className=" ">
         <div className="">
-        <BoutonDep/>
+        <BoutonDep fct={actionOn} active={active}/>
       </div> 
        <Suspense fallback="loading">
         {<>
@@ -70,8 +79,8 @@ export  default function Departement(){
                               
                             <div className="w-1/5 text-right">
                             <div className="flex items-center justify-end space-x-2 !mr-2">
-                                  <Modification depID={x.id} depName={x.name}/>
-                                  <Delete depID={x.id} depName={x.name}/>
+                                  <Modification fct={actionOn} active={active} depID={x.id} depName={x.name}/>
+                                  <Delete fct={actionOn} active={active} depID={x.id} depName={x.name}/>
                             </div>
                             </div>
                             </div>

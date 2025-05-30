@@ -2,7 +2,13 @@
 import { useEffect, useState } from "react"
 import BoutonPro from "../outil/boutonPro"
 import { proNav } from "./proNav"
-export default function List(){
+export default function List(
+  liste:{
+    
+    active : string
+    fct : (x:boolean)=>void
+  }
+){
     const [depart,setDepart]=useState()
     const [loading,setLoading]=useState(true)
     useEffect(
@@ -10,7 +16,7 @@ export default function List(){
         async function fetchData(){
             try{const apiDepart = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10",
           {headers:{
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODE2NDEzNCwiZXhwIjoxNzQ4NTk2MTM0fQ.Ipi0GxLPi-uWBx2QAvZe8HQjou6wNj3rwXscolpv1hA"
+            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
           }})
           const variab=  await apiDepart.json()
           setDepart(variab)
@@ -25,6 +31,6 @@ export default function List(){
       if(loading) return "loading..."
     
     return (
-      <BoutonPro nu={proNav} liste={ depart.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
+      <BoutonPro active={liste.active} fct={liste.fct} nu={proNav} liste={ depart.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
     )
     }

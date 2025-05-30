@@ -2,7 +2,12 @@
 
 import { FormEvent, useState } from "react"
 import { depNav } from "../api/depNav"
-export default function BoutonDep(){
+export default function BoutonDep(
+  listeDep:{
+    active : string
+    fct : (x:boolean)=>void
+  }
+){
   const [refresh, setRefresh] = useState(false);   
   const [dep, setDep]=useState("")
   const [msg,setMsg]=useState('')
@@ -10,6 +15,7 @@ export default function BoutonDep(){
   function openWindow(check : boolean){
     setVisibility(x=>x=check)
    setMsg("")
+   listeDep.fct(check)
   }
   function setMyMsg(newMsg : string){
       setMsg(newMsg)
@@ -22,7 +28,7 @@ export default function BoutonDep(){
       const response = await fetch('https://dev.next.core.yatouze.com/api/yatouze/departments', {
         method: 'POST',
         headers:{
-        Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODE2NDEzNCwiZXhwIjoxNzQ4NTk2MTM0fQ.Ipi0GxLPi-uWBx2QAvZe8HQjou6wNj3rwXscolpv1hA",
+        Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s",
         'Content-Type': 'application/json',
         "accept":"*/*"
         },
@@ -59,9 +65,20 @@ export default function BoutonDep(){
         <p className="text-black w-full font-bold">Actions</p>
         </div>
       </div>
-      <div className="flex justify-between items-center mb-4">
+      <div className={"flex justify-between items-center mb-4"+ listeDep.active}>
         <div></div>
-        <button onClick={()=>{openWindow(true)}}><img className="border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500" src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40"/></button>
+        <button onClick={()=>{openWindow(true)}}>
+        <svg className={"border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500 "+listeDep.active}  fill="#14468c" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+          width="40px" height="40px" viewBox="0 0 45.402 45.402"
+          >
+        <g>
+          <path d="M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141
+            c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27
+            c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435
+            c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"/>
+        </g>
+        </svg>
+        </button>
       </div>
         <form action="" onSubmit={ submitting}>
           <div className={"text-white right-0 top-1/2 fixed border rounded border-gray-300 p-5 shadow-lg shadow-gray-500 flex flex-col items-center bg-white "+( visibility?"":"hidden")}>
