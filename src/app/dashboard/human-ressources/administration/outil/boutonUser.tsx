@@ -82,7 +82,7 @@ export default function BoutonUser(
             <div className="w-full grid grid-cols-2 gap-y-[38px] gap-x-[71px] my-3">
               <div className="flex flex-col">
                 <div className="flex">Image du profil :</div>
-                 <label for="imgP" class="btn"><img src={img } alt="" width={110} height={110}/></label>
+                 <label htmlFor="imgP" ><img src={img } alt="" width={110} height={110}/></label>
                 <input onChange={(event)=>{
                   setSrc(URL.createObjectURL(event.target.files[0]))
                   setImg(src?src:event.target.files[0])
