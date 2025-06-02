@@ -4,6 +4,8 @@ import ListProfil from "../api/profil"
 import BoutonUser from "../outil/boutonUser"
 import { collabNav } from "../api/collabNav"
 import NavigationCollab from "../outil/navigationCollab"
+import RandomIMG, { random } from "../outil/generatorImg"
+import Random from "../outil/generatorImg"
 
 export default function Collaborateurs(){
   const [nb,setNb]=useState(1)
@@ -38,6 +40,8 @@ export default function Collaborateurs(){
       setNb(x=>x=x-1)
     }
     }
+    let randomize = Math.round(Math.random()*(32-1)+1)
+   const defaultIMG = "https://yatouze-s3-bucket.s3.amazonaws.com/8250a25270b5617d0f5d2359c4e6f2.png"
    if(loading){return "loading..."}
    return (
      <>
@@ -50,7 +54,7 @@ export default function Collaborateurs(){
          collab.data.map((x:any)=>{return( 
            <div key={x.id} className="flex p-5">
             <div>
-            <img src={x.profilePhoto? x.profilePhoto : "https://yatouze-s3-bucket.s3.amazonaws.com/8250a25270b5617d0f5d2359c4e6f2.png"} alt={x.profilePhoto} width={160} height={100} />
+            <Random randomNb={Math.round(Math.random()*(32-1)+1)} checker={x.profilePhoto?true:false} profilePhoto={x.profilePhoto}/>
               <div className="flex gap-1 text-black pl-3 w-full"><p className="font-bold">Statut: </p><p>{x.status?x.status:"Hors service"}</p></div>
             </div>
             <div className="flex gap-0 flex-col">

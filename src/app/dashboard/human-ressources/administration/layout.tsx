@@ -35,7 +35,6 @@ export default function Layout({
       router?.push('/dashboard/human-ressources/administration/'+go)
 
    }
-    console.log("MON URL ::"+pa)
    
 const [styleDep,setStyleDep] = useState({
       dep:"",
