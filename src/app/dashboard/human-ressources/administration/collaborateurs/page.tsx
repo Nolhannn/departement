@@ -30,7 +30,8 @@ export default function Collaborateurs(){
   )
   function next(n:string){
       if(n==="next"){
-      if(nb<Math.ceil(collabNav/10))
+        console.log(collabNav)
+      if(nb<Math.ceil(collabNav/6))
       setNb(x=>x=x+1)
     }else{
       if(nb>1)
@@ -49,7 +50,7 @@ export default function Collaborateurs(){
          collab.data.map((x:any)=>{return( 
            <div key={x.id} className="flex p-5">
             <div>
-            <img src={x.profilePhoto? x.profilePhoto : "https://yatouze-s3-bucket.s3.amazonaws.com/8250a25270b5617d0f5d2359c4e6f2.png"} alt="" width={160} height={100} />
+            <img src={x.profilePhoto? x.profilePhoto : "https://yatouze-s3-bucket.s3.amazonaws.com/8250a25270b5617d0f5d2359c4e6f2.png"} alt={x.profilePhoto} width={160} height={100} />
               <div className="flex gap-1 text-black pl-3 w-full"><p className="font-bold">Statut: </p><p>{x.status?x.status:"Hors service"}</p></div>
             </div>
             <div className="flex gap-0 flex-col">

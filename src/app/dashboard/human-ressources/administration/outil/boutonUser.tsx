@@ -1,6 +1,6 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 export default function BoutonUser(
   liste : {
     liste : any
@@ -25,9 +25,10 @@ export default function BoutonUser(
    const [postalCode, setpostalCode]=useState("")
    const [tel2, setTel2]=useState("")
    const [workStartDate, setWorkStartDate]=useState("")
-
+   const [img, setImg]=useState("https://dev.app.yatouze.com/_next/static/media/logo_placeholder.16c7ed30.png")
   const [visibility, setVisibility]=useState(false)
-  function openWindow(check : boolean){
+   const [src, setSrc] = useState()
+     function openWindow(check : boolean){
     setVisibility(x=>x=check)
    setMsg("")
   }
@@ -53,6 +54,7 @@ export default function BoutonUser(
       formData.append("postalCode",postalCode)
       formData.append("phoneNumberTwo",tel2)
       formData.append("workStartDate",workStartDate)
+      formData.append("profilePhoto",img)
       const response = await fetch('https://dev.next.core.yatouze.com/api/yatouze/users', {
         method: 'POST',
         headers:{
@@ -66,7 +68,9 @@ export default function BoutonUser(
       newMsg ? setMyMsg(newMsg.message) : setMyMsg("Erreur")
     } 
      const listePro =  liste.liste.map((x:any)=>x.props)
-    
+     useEffect(()=>{
+       setSrc(img)}
+   ,[img])
   return(
     <>
         <p className="text-black p-5 w-full font-bold">Collaborateurs</p>
@@ -75,6 +79,14 @@ export default function BoutonUser(
           <div className={"text-black right-0 top-1/5 fixed border rounded border-gray-300 p-5 shadow-lg shadow-gray-500 flex flex-col items-center bg-white "+( visibility?"":"hidden")}>
             <p className="" >Nouveau collaborateur :</p>
             <div className="w-full grid grid-cols-2 gap-y-[38px] gap-x-[71px] my-3">
+              <div className="flex flex-col">
+                <div className="flex">Image du profil :</div>
+                <input onChange={(event)=>{
+                  setSrc(URL.createObjectURL(event.target.files[0]))
+                  setImg(src?src:event.target.files[0])
+                  }} id="imgP" type="file" name="imgProfil" accept="image/*" hidden/>
+                <img src={img } alt="" width={110} height={110}/>
+              </div>
               <div className="flex flex-col">
               
                 <div className="flex">Nom :<p className="text-red-500">*</p></div>
