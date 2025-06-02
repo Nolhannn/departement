@@ -15,10 +15,19 @@ export default function Collaborateurs(){
   const[dep,setDep] = useState("")
   const[recherche,setRecherche] = useState("")
   function DepOn(x:string){
+    if(x===""||x==="Tous"){
+      setDep("")
+    }else{
       setDep('&departmentId='+x)
+
+    }
   }
   function rechercheOn(x:string){
+    if(x===""||x===" "){
+      setRecherche("")
+    }else{
     setRecherche("&character="+x)
+    }
   }
     
   function actionOn(x:boolean){

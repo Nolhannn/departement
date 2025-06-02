@@ -87,8 +87,8 @@ export default function BoutonUser(
               <div className="flex flex-col items-center"> 
               <div className="mr-2 inline-block font-semibold text-nowrap">Trier par département:</div>
 
-              <select onChange={(e)=>{liste.dep(""+e.target.value)}} >
-                <option defaultValue="" >Choisissez un département</option>
+              <select onChange={(e)=>{liste.dep(e.target.value)}} >
+                <option value="Tous" >Choisissez un département</option>
                 {depName.data.map((x:any)=>{return(<option value={x.id}>{x.name}</option>)})}
               </select>
             
