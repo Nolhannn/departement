@@ -8,6 +8,8 @@ export default function BoutonPro(
     nu:number
     active : string
     fct : (x:boolean)=>void
+    rech : (x:string)=>void
+    alph : (x:string)=>void
   }
 ){
  let nu=proNav
@@ -74,19 +76,31 @@ export default function BoutonPro(
         </div>
       </div>
 
-      <div className="flex justify-between items-center mb-4">
-        <div></div>
+     <div className="text-black flex justify-between">
+              <div className="flex flex-col items-center"> 
+              <div className="mr-2 inline-block font-semibold text-nowrap">Trier par</div>
+              <select onChange={(e)=>liste.alph(e.target.value)} >
+                <option value="alphabétique" >Ordre alphabétique</option>
+                <option value="création"  >Ordre de création</option>
+              </select>
+              </div>
+              <div className="flex items-center border border-gray-500 p-4 rounded">
+                  <input onChange={(e)=>liste.rech(e.target.value)} className="outline-none" placeholder="Rechercher..." type="text" />
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="w-4 h-4 sm:w-6 sm:h-6 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+              </div>
+     
         <button onClick={()=>{openWindow(true)}}>
-          <svg className={"border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500 "+liste.active}  fill="#14468c" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+        <svg className={"border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500 "+listeDep.active}  fill="#14468c" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
           width="40px" height="40px" viewBox="0 0 45.402 45.402"
           >
-            <g>
-            <path d="M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141
-              c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27
-              c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435
-              c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"/>
-            </g>
-          </svg>
+        <g>
+          <path d="M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141
+            c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27
+            c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435
+            c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z"/>
+        </g>
+        </svg>
         </button>
       </div>
         <form action="" onSubmit={ submitting}>

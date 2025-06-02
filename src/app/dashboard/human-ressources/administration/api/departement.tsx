@@ -7,6 +7,8 @@ export default function List(
     
     active : string
     fct : (x:boolean)=>void
+    rech : (x:string)=>void
+    alph : (x:string)=>void
   }
 ){
     const [depart,setDepart]=useState()
@@ -31,6 +33,6 @@ export default function List(
       if(loading) return "loading..."
     
     return (
-      <BoutonPro active={liste.active} fct={liste.fct} nu={proNav} liste={ depart.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
+      <BoutonPro active={liste.active} alph={liste.alph} rech={liste.rech} fct={liste.fct} nu={proNav} liste={ depart.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
     )
     }

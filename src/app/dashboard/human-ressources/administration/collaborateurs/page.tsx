@@ -11,11 +11,28 @@ export default function Collaborateurs(){
   const [nb,setNb]=useState(1)
   const [collab,setCollab]=useState()
   const [loading,setLoading]=useState(true)
+   const [active,setActive] = useState("pointer-events-auto")
+  const[dep,setDep] = useState("")
+  const[recherche,setRecherche] = useState("")
+  function DepOn(x:string){
+      setDep('&departmentId='+x)
+  }
+  function rechercheOn(x:string){
+    setRecherche("&character="+x)
+  }
+    
+  function actionOn(x:boolean){
+    if(x==true){
+    setActive(" pointer-events-none fill-(--currentColorOpa)")
+  }else{
+    setActive(" pointer-events-auto ")
+  }
+  }
   useEffect(
     ()=>{
       async function fetchData(){
         try{
-           const apiCollaborateurs = await fetch("https://dev.next.core.yatouze.com/api/yatouze/users/all?size=6&page="+nb,
+           const apiCollaborateurs = await fetch("https://dev.next.core.yatouze.com/api/yatouze/users/all?size=6&page="+nb+dep+recherche,
           {headers:{
             Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
           }}
@@ -28,7 +45,7 @@ export default function Collaborateurs(){
         
       }
       fetchData()
-    },[nb]
+    },[nb,dep,recherche]
   )
   function next(n:string){
       if(n==="next"){
@@ -45,11 +62,11 @@ export default function Collaborateurs(){
    if(loading){return "loading..."}
    return (
      <>
-       <div className=" bg-white mt-10 min-h-100"> 
-       <div className="flex relative">
-        <ListProfil/>
+       <div className=" bg-white mt-1 min-h-100"> 
+       <div className="flex flex-col relative">
+        <ListProfil  active={active} fct={actionOn} rech={rechercheOn} dep={DepOn} />
        </div>
-       <div className="w-full mt-4 h-[calc(100vh-30rem)] overflow-y-scroll flex flex-wrap">
+       <div className="w-full mt-4 h-[calc(100vh-20rem)] overflow-y-scroll flex flex-wrap">
            {
          collab.data.map((x:any)=>{return( 
            <div key={x.id} className="flex p-5">
@@ -73,7 +90,7 @@ export default function Collaborateurs(){
         
         </div>
         <div className="text-black justify-center items-center gap-5 flex flex-col">
-          <p>Page : {nb}</p> 
+         
         {  collabNav >10  ?
                     <NavigationCollab page={nb} nextPage={next}/>:"" }
 

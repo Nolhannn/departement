@@ -6,6 +6,8 @@ export default function BoutonDep(
   listeDep:{
     active : string
     fct : (x:boolean)=>void
+    rech : (x:string)=>void
+    alph : (x:string)=>void
   }
 ){
   const [refresh, setRefresh] = useState(false);   
@@ -65,8 +67,20 @@ export default function BoutonDep(
         <p className="text-black w-full font-bold">Actions</p>
         </div>
       </div>
-      <div className={"flex justify-between items-center mb-4"+ listeDep.active}>
-        <div></div>
+      <div className="text-black flex justify-between">
+              <div className="flex flex-col items-center"> 
+              <div className="mr-2 inline-block font-semibold text-nowrap">Trier par</div>
+              <select onChange={(e)=>listeDep.alph(e.target.value)} >
+                <option value="alphabétique" >Ordre alphabétique</option>
+                <option value="création"  >Ordre de création</option>
+              </select>
+              </div>
+              <div className="flex items-center border border-gray-500 p-4 rounded">
+                  <input onChange={(e)=>listeDep.rech(e.target.value)} className="outline-none" placeholder="Rechercher..." type="text" />
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="w-4 h-4 sm:w-6 sm:h-6 text-gray-400" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
+              </div>
+     
         <button onClick={()=>{openWindow(true)}}>
         <svg className={"border cursor-pointer hover:scale-110 duration-300 p-2 rounded-full shadow-md shadow-gray-500 "+listeDep.active}  fill="#14468c" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
           width="40px" height="40px" viewBox="0 0 45.402 45.402"

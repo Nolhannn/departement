@@ -14,6 +14,20 @@ export default  function Profil(){
     const [profi,setProfi]=useState<Profil[]>([])
     const [loading, setLoading] =useState(true)
   const [active,setActive] = useState("pointer-events-auto ")
+  
+  const[alphabet,setAlphabet] = useState("&alphabet=true")
+  const[recherche,setRecherche] = useState("")
+  function alphabetOn(x:string){
+    console.log(x)
+    if(x==="alphabétique"){
+      setAlphabet('&alphabet=true')
+    }else{
+      setAlphabet("")
+    }
+  }
+  function rechercheOn(x:string){
+    setRecherche("&name="+x)
+  }
     
   function actionOn(x:boolean){
     if(x==true){
@@ -35,7 +49,7 @@ export default  function Profil(){
       ()=>{
         async function fetchData(){
           try{
-          let apiProfil = await fetch("https://dev.next.core.yatouze.com/api/yatouze/profiles?size=10&page="+nb,
+          let apiProfil = await fetch("https://dev.next.core.yatouze.com/api/yatouze/profiles?size=10&page="+nb+alphabet+recherche,
           {headers:{
             Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
           }}
@@ -52,14 +66,14 @@ export default  function Profil(){
         setLoading(false)
       }}
         fetchData()
-      },[nb]
+      },[nb,alphabet,recherche]
     )
     if(loading) return "loading..."
     return (
       <>
         <div className="w-full  border shadow-md shadow-gray-500  h-[calc(100vh-11rem)]"> 
         <div className="">
-          <List fct={actionOn} active={active}/>
+          <List fct={actionOn} alph={alphabetOn} rech={rechercheOn}  active={active}/>
         </div>
         <div className="w-full mt-4 overflow-y-scroll">
             
@@ -85,9 +99,9 @@ export default  function Profil(){
          </div>
          
         
-        <div className="text-black justify-center items-center gap-5 flex flex-col">
-          <p>Page : {nb}</p> 
-        <NavigationPro nextPage={next}/>
+        <div className="text-black justify-center items-center gap-5 flex">
+          
+        <NavigationPro page={nb} nextPage={next}/>
 
          </div>
          </div>

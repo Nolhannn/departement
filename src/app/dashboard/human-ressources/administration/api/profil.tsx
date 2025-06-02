@@ -1,7 +1,14 @@
 "use client"
 import { useEffect, useState } from "react"
 import BoutonUser from "../outil/boutonUser"
-export default function ListProfil(){
+export default function ListProfil(
+  props: {
+    fct :(x:boolean)=>void
+    active : string
+    rech : (x:string)=>void
+    dep : (x:string)=>void
+  }
+){
       
     const [profil,setProfil]=useState()
     const [laoding, setLaoding]=useState(true)
@@ -27,7 +34,7 @@ export default function ListProfil(){
 if(laoding){return "loading..."}
     return (
       
-           <BoutonUser liste={ profil.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
+           <BoutonUser active={props.active} fct={props.fct} rech={props.rech} dep={props.dep} liste={ profil.data.map((x : any)=><option id={x.id}>{x.name}</option>)}/>
 
     )
     }

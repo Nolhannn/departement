@@ -17,13 +17,25 @@ export  default function Departement(){
   const [depart,setDepart]=useState<Depart[]>([])
   const [loading, setLoading] =useState(true)
    const [active,setActive] = useState("pointer-events-auto")
-    
+  const[alphabet,setAlphabet] = useState("&alphabet=true")
+  const[recherche,setRecherche] = useState("")
   function actionOn(x:boolean){
     if(x==true){
     setActive(" pointer-events-none fill-(--currentColorOpa)")
   }else{
     setActive(" pointer-events-auto ")
   }
+  }
+  function alphabetOn(x:string){
+    console.log(x)
+    if(x==="alphabétique"){
+      setAlphabet('&alphabet=true')
+    }else{
+      setAlphabet("")
+    }
+  }
+  function rechercheOn(x:string){
+    setRecherche("&name="+x)
   }
   function next(n:string){
     if(n==="next"){
@@ -38,7 +50,7 @@ export  default function Departement(){
     ()=>{
       async function fetchData(){
         try{
-        let apiDepartement = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10&page="+nb,
+        let apiDepartement = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10&page="+nb+alphabet+recherche,
         {headers:{
           Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
         }}
@@ -53,7 +65,7 @@ export  default function Departement(){
       setLoading(false)
     }}
       fetchData()
-    },[nb]
+    },[nb,alphabet,recherche]
   )
   if(loading) return "loading..."
   return (
@@ -63,7 +75,7 @@ export  default function Departement(){
       
       <div className=" ">
         <div className="">
-        <BoutonDep fct={actionOn} active={active}/>
+        <BoutonDep fct={actionOn} alph={alphabetOn} rech={rechercheOn} active={active}/>
       </div> 
         {<>
               {depart.data.map((x:any)=>{return( 
@@ -92,10 +104,10 @@ export  default function Departement(){
                   
        </div>
          
-      <div className="text-black justify-center items-center gap-5 flex flex-col">
-          <p>Page : {nb}</p> 
+      <div className="text-black justify-center items-center gap-5 flex ">
+          
         {  depNav >10  ?
-            <Navigation nextPage={next}/>:"" }
+            <Navigation page={nb} nextPage={next}/>:"" }
           
       </div>
      </div>
