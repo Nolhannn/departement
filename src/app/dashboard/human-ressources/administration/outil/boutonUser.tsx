@@ -16,18 +16,18 @@ export default function BoutonUser(
   const [tel, setTel]=useState("")
   const [msg,setMsg]=useState('')
 
-   const [adresse, setadresse]=useState("")
-   const [idCollaborateur, setidCollaborateur]=useState("")
-   const [pays, setPays]=useState("")
-   const [city, setCity]=useState("")
-   const [monthlyIncome, setmonthlyIncome]=useState("")
-   const [currency, setcurrency]=useState("")
-   const [postalCode, setpostalCode]=useState("")
-   const [tel2, setTel2]=useState("")
-   const [workStartDate, setWorkStartDate]=useState("")
-   const [img, setImg]=useState("https://dev.app.yatouze.com/_next/static/media/logo_placeholder.16c7ed30.png")
+  const [adresse, setadresse]=useState("")
+  const [idCollaborateur, setidCollaborateur]=useState("")
+  const [pays, setPays]=useState("")
+  const [city, setCity]=useState("")
+  const [monthlyIncome, setmonthlyIncome]=useState("")
+  const [currency, setcurrency]=useState("")
+  const [postalCode, setpostalCode]=useState("")
+  const [tel2, setTel2]=useState("")
+  const [workStartDate, setWorkStartDate]=useState("")
+  const [img, setImg]=useState("https://dev.app.yatouze.com/_next/static/media/logo_placeholder.16c7ed30.png")
   const [visibility, setVisibility]=useState(false)
-   const [src, setSrc] = useState()
+  const [src,setSrc]=useState()
      function openWindow(check : boolean){
     setVisibility(x=>x=check)
    setMsg("")
@@ -69,23 +69,25 @@ export default function BoutonUser(
     } 
      const listePro =  liste.liste.map((x:any)=>x.props)
      useEffect(()=>{
-       setSrc(img)}
+      
+      }
    ,[img])
   return(
     <>
         <p className="text-black p-5 w-full font-bold">Collaborateurs</p>
         <button onClick={()=>{openWindow(true)}}><img src="/plus-svgrepo-com.svg" alt="plus" width="40" height="40" className="cursor-pointer hover:scale-110 duration-300 border p-2 rounded-full shadow-md shadow-gray-500 fill-(--currentColor)"/></button>
         <form encType="multipart/form-data" action="" onSubmit={ submitting}>
-          <div className={"text-black right-0 top-1/5 fixed border rounded border-gray-300 p-5 shadow-lg shadow-gray-500 flex flex-col items-center bg-white "+( visibility?"":"hidden")}>
+          <div className={"text-black right-0 top-1/20 fixed border rounded border-gray-300 p-5 shadow-lg shadow-gray-500 flex flex-col items-center bg-white "+( visibility?"":"hidden")}>
             <p className="" >Nouveau collaborateur :</p>
             <div className="w-full grid grid-cols-2 gap-y-[38px] gap-x-[71px] my-3">
               <div className="flex flex-col">
                 <div className="flex">Image du profil :</div>
+                 <label for="imgP" class="btn"><img src={img } alt="" width={110} height={110}/></label>
                 <input onChange={(event)=>{
                   setSrc(URL.createObjectURL(event.target.files[0]))
                   setImg(src?src:event.target.files[0])
                   }} id="imgP" type="file" name="imgProfil" accept="image/*" hidden/>
-                <img src={img } alt="" width={110} height={110}/>
+                
               </div>
               <div className="flex flex-col">
               
