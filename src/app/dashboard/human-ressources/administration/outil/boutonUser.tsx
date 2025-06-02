@@ -92,7 +92,8 @@ export default function BoutonUser(
               <div className="flex flex-col">
                 <div className="flex">Civilité :<p className="text-red-500">*</p></div>
                 <select required  onChange={(event)=>setCivilite(event.target.selectedOptions[0].value)} name="civilite" className="border text-black bg-white p-1" >
-                  <option selected value="Monsieur">Monsieur</option>
+                <option key='defaultKey'  defaultValue="Monsieur"  >Choisissez une civilité ...</option>
+                  <option value="Monsieur">Monsieur</option>
                   <option value="Madame">Madame</option>
                   <option value="Mademoiselle">Mademoiselle</option>
                   <option value="Autre">Autre</option>
@@ -103,10 +104,12 @@ export default function BoutonUser(
                 <select name="profil" className=" border text-black bg-white p-1" id="" onChange={(event)=>{
                   setProfil(event.target.selectedOptions[0].id )
                   }}>
+                <option key='defaultKey' id="69" defaultValue="Invité"  >Choisissez un profil ...</option>
+
                {listePro.map((x:any)=>{
                 return(
                 
-                <option  id={x.id}  selected={x.children=="Invité" ? true : false}  value={x.children}>{x.children}</option>
+                <option key={x.id} id={x.id}  value={x.children}>{x.children}</option>
                 )
               })
                 }
@@ -144,7 +147,8 @@ export default function BoutonUser(
                 <p className="">Paie mensuelle :</p>
                 <input  onChange={(event)=>setmonthlyIncome(event.target.value)} name="paie" className=" border text-black bg-white p-1" type="text" />
                 <select onChange={(event)=>setcurrency(event.target.selectedOptions[0].value)} name="devise" className=" border text-black bg-white p-1" >
-                  <option selected value="EUR">EUR</option>
+                  <option defaultValue="EUR" key="defaultKey">Choisissez une devise...</option>
+                  <option value="EUR">EUR</option>
                   <option value="USD">USD</option>
                 </select> 
               </div>

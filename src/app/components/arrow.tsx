@@ -57,9 +57,13 @@ export default function Arrow({redirectManual}:{redirectManual :boolean}){
   const propsRc={
     etatRc:recrut
   }
-  let pa = window.location.pathname.split("/").findLast((element) => element)
+  let pa 
+  pa= ()=>{ 
+    if(typeof window !== 'undefined'){
+     return window.location.pathname.split("/").findLast((element) => element)
+    }
+    }
   const [rh,setRH] = useState(pa==='departement'||"profil"||"collaborateurs"?true:false)  
-    console.log((pa==='departement'||"profil"||"collaborateurs")+" RH")
   useEffect(()=>{
     changeRH()
   },[])

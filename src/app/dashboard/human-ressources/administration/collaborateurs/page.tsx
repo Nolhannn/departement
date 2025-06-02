@@ -47,7 +47,7 @@ export default function Collaborateurs(){
        <div className="w-full mt-4 h-[calc(100vh-30rem)] overflow-y-scroll flex flex-wrap">
            {
          collab.data.map((x:any)=>{return( 
-           <div className="flex p-5">
+           <div key={x.id} className="flex p-5">
             <div>
             <img src={x.profilePhoto? x.profilePhoto : "https://yatouze-s3-bucket.s3.amazonaws.com/8250a25270b5617d0f5d2359c4e6f2.png"} alt="" width={160} height={100} />
               <div className="flex gap-1 text-black pl-3 w-full"><p className="font-bold">Statut: </p><p>{x.status?x.status:"Hors service"}</p></div>

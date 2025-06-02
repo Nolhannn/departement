@@ -11,7 +11,7 @@ export default function Layout({
   const seletionnerColor = "p-2 rounded shadow-md shadow-gray-500 cursor-pointer text-center text-large sm:text-lg w-full  flex-1 text-[#fff] bg-[var(--currentColor)] font-semibold"
   const regularColor = "p-2 bg-white rounded shadow-md shadow-gray-500 cursor-pointer text-center text-large sm:text-lg w-full  flex-1 text-gray-500"
   const router = useRouter()
-   const [pa, setPa]  = useState(window.location.pathname.split("/").findLast((element) => element))
+   const [pa, setPa]  = useState("")
    function setter(go:string){
      if(go=="departement"){
         setStyleDep(w=>{ return{...w, dep:seletionnerColor}})
@@ -33,8 +33,9 @@ export default function Layout({
         setStyleDep(w=>{ return{...w, collab:regularColor}})
       }
       router?.push('/dashboard/human-ressources/administration/'+go)
+
    }
-    console.log(pa)
+    console.log("MON URL ::"+pa)
    
 const [styleDep,setStyleDep] = useState({
       dep:"",
@@ -43,16 +44,17 @@ const [styleDep,setStyleDep] = useState({
     })
     useEffect(
       ()=>{
+      router?.push('/dashboard/human-ressources/administration/'+pa)
+
+        setPa(window.location.pathname.split("/").findLast((element) => element)||"")
       if(pa=="departement"){
         setStyleDep(w=>{ return{...w, dep:seletionnerColor}})
-        router?.push('/dashboard/human-ressources/administration/departement')
 
       }else{
         setStyleDep(w=>{ return{...w, dep:regularColor}})
       }
       if(pa=="profil"){
         setStyleDep(w=>{ return{...w, pro:seletionnerColor}})
-        router?.push('/dashboard/human-ressources/administration/profil')
 
       }else{
         setStyleDep(w=>{ return{...w, pro:regularColor}})
@@ -60,7 +62,6 @@ const [styleDep,setStyleDep] = useState({
       }
       if("collaborateurs"==pa){
         setStyleDep(w=>{ return{...w, collab:seletionnerColor}})
-        router?.push('/dashboard/human-ressources/administration/collaborateurs')
         
       }else{
         setStyleDep(w=>{ return{...w, collab:regularColor}})

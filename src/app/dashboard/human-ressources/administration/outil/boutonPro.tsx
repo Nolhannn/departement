@@ -100,8 +100,10 @@ export default function BoutonPro(
               setidDep(event.target.selectedOptions[0].id )
               
             }}>
+              <option key="defaultkey" id="45" defaultValue="Autre" className="bg-gray-500" >Choisissez un département...</option>
+
               {listeDep.map((x:any)=>{return(
-                <option id={x.id} selected={x.children=="Autre" ? true : false}  className="bg-gray-500" value={x.children}>{x.children}</option>
+                <option key={x.id} id={x.id} className="bg-gray-500" value={x.children}>{x.children}</option>
                 )})}
             </select>
             <div className="flex flex-row gap-5 pt-5 ">

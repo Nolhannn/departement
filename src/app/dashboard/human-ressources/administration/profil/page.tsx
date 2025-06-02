@@ -65,7 +65,7 @@ export default  function Profil(){
             
         {
           profi.data.map((x:any)=>{return( 
-            <div className="flex flex-row">
+            <div key={x.id} className="flex flex-row">
               <div className="w-2/5">
                 <p className="text-black p-5 w-full">{x.name}</p>
               </div>

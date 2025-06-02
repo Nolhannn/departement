@@ -58,16 +58,16 @@ export  default function Departement(){
   if(loading) return "loading..."
   return (
     <>
+       <Suspense fallback="loading">
       <div className="border shadow-md shadow-gray-500 h-fit max-h-[calc(100vh-11rem)]"> 
       
       <div className=" ">
         <div className="">
         <BoutonDep fct={actionOn} active={active}/>
       </div> 
-       <Suspense fallback="loading">
         {<>
               {depart.data.map((x:any)=>{return( 
-                        <div className="border border-[#BFBFBF80] false flex justify-between hover:bg-opacity-60 duration-100 odd:bg-gray-100 even:bg-gray-150 p-3 border-0 text-smaller sm:text-large">
+                        <div key={x.name} className="border border-[#BFBFBF80] false flex justify-between hover:bg-opacity-60 duration-100 odd:bg-gray-100 even:bg-gray-150 p-3 border-0 text-smaller sm:text-large">
                             <div className="w-2/5">
                               <p className="text-black p-1 w-full">{x.name}</p>
                             </div>
@@ -89,8 +89,9 @@ export  default function Departement(){
                     )}
                
               </>} 
-            </Suspense>          
+                  
        </div>
+         
       <div className="text-black justify-center items-center gap-5 flex flex-col">
           <p>Page : {nb}</p> 
         {  depNav >10  ?
@@ -98,6 +99,7 @@ export  default function Departement(){
           
       </div>
      </div>
+      </Suspense>  
      
     </>
     

@@ -21,7 +21,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let pa = window.location.pathname.split("/").findLast((element) => element)
+  let pa =()=>{ 
+    if(typeof window !== 'undefined')
+    window.location.pathname.split("/").findLast((element) => element)}
  let variableAccess =  pa=="departement"||"collaborateurs"||"profil"?true:false
 
   return (
