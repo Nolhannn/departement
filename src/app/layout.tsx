@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { useState } from "react";
 import Arrow from './components/arrow';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,11 +21,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let pa =()=>{ 
-    if(typeof window !== 'undefined')
-    window.location.pathname.split("/").findLast((element) => element)}
- let variableAccess =  pa=="departement"||"collaborateurs"||"profil"?true:false
-
+  const router = useRouter()
+  let pa = window.location.pathname.split("/").findLast((element) => element)
+ let variableAccess =  false//(pa=="departement"||"collaborateurs"||"profil")?true:false
+ 
   return (
     <html lang="en" className="h-fit">
       <body
@@ -40,7 +39,14 @@ export default function RootLayout({
             
           </div>
              <Arrow  redirectManual={variableAccess}/>
-          
+          <button onClick={()=>{
+            return(
+              router.push("/dashboard/map")
+            )
+              }} className="flex cursor-pointer  gap-5">
+            <p>Map</p>
+            <img src="/arrow-down.svg" alt="arrow" width="20" height="20" />
+          </button>
           <div className="flex  gap-5">
             <p>Gestion Commercial</p>
             <img src="/arrow-down.svg" alt="arrow" width="20" height="20" />
@@ -69,6 +75,7 @@ export default function RootLayout({
             <p>Contact & Support</p>
             <img src="/arrow-down.svg" alt="arrow" width="20" height="20" />
           </div>
+          
         </nav>
         <div className="content-center flex flex-col justify-around  p-5 bg-white w-screen">
           <div className="flex md:space-x-8 space-x-4 py-4 px-2 justify-between items-center top-0 right-0 absolute">

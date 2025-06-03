@@ -22,6 +22,7 @@ export default function ListProfil(
           )
           const varia=  await apiProfils.json()
           setProfil(varia)
+
         }finally{
           setLaoding(false)
         }
@@ -30,7 +31,7 @@ export default function ListProfil(
       fetchData()
     },[]
   )
-    
+ 
 if(laoding){return "loading..."}
     return (
       

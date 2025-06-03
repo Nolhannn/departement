@@ -1,11 +1,13 @@
 "use client"
 import { useEffect, useState } from "react"
-import ListProfil from "../api/profil"
+import ListProfil, { profilex } from "../api/profil"
 import BoutonUser from "../outil/boutonUser"
 import { collabNav } from "../api/collabNav"
 import NavigationCollab from "../outil/navigationCollab"
 import RandomIMG, { random } from "../outil/generatorImg"
 import Random from "../outil/generatorImg"
+import Detail from "../outil/detail"
+import { listeProfiles } from "../api/proNav"
 
 export default function Collaborateurs(){
   const [nb,setNb]=useState(1)
@@ -14,6 +16,7 @@ export default function Collaborateurs(){
    const [active,setActive] = useState("pointer-events-auto")
   const[dep,setDep] = useState("")
   const[recherche,setRecherche] = useState("")
+  const[detail,setDetail]=useState(false)
   function DepOn(x:string){
     if(x===""||x==="Tous"){
       setDep("")
@@ -36,6 +39,9 @@ export default function Collaborateurs(){
   }else{
     setActive(" pointer-events-auto ")
   }
+  }
+  function detailOpen(){
+    setDetail(x=>x=!x)
   }
   useEffect(
     ()=>{
@@ -75,10 +81,10 @@ export default function Collaborateurs(){
        <div className="flex flex-col relative">
         <ListProfil  active={active} fct={actionOn} rech={rechercheOn} dep={DepOn} />
        </div>
-       <div className="w-full mt-4 h-[calc(100vh-20rem)] overflow-y-scroll flex flex-wrap">
+       <div className="w-full mt-4 h-[calc(100vh-25rem)] gap-5 overflow-y-scroll flex-1 flex flex-wrap p-2">
            {
          collab.data.map((x:any)=>{return( 
-           <div key={x.id} className="flex p-5">
+           <div key={x.id} className="flex flex-1 p-5 shadow-md shadow-gray-500">
             <div>
             <Random randomNb={Math.round(Math.random()*(32-1)+1)} checker={x.profilePhoto?true:false} profilePhoto={x.profilePhoto}/>
               <div className="flex gap-1 text-black pl-3 w-full"><p className="font-bold">Statut: </p><p>{x.status?x.status:"Hors service"}</p></div>
@@ -92,11 +98,19 @@ export default function Collaborateurs(){
               <div className=" flex gap-1 text-black pl-3 w-full"><p className="font-bold">Téléphone: </p><p>{x.phoneNumberOne}</p></div>
               <div className=" flex gap-1 text-black pl-3 w-full"><p className="font-bold">Prise de service: </p><p>{(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(new Date(x.createdAt)).replaceAll("/"," - "))}</p></div>
               </div>
+              <div className="text-right content-end flex-auto">
+                <button onClick={detailOpen}>
+                  <img alt="Voir détails" loading="lazy" width="30" height="31" decoding="async" data-nimg="1" className="text-primary text-smaller sm:text-2xl hover:scale-110 duration-300 cursor-pointer" src="https://dev.app.yatouze.com/_next/static/media/full-screen-icon.b70a10a5.svg"></img>
+                </button>
+              </div>
               </div>)
               }
              
        )}
         
+        </div>
+        <div className={detail==true ? "":"hidden"}>
+          <Detail colab={collab} liste={ listeProfiles.data.map((x : any)=><option id={x.id}>{x.name}</option>)} active={active} opener={detailOpen}/>
         </div>
         <div className="text-black justify-center items-center gap-5 flex flex-col">
          

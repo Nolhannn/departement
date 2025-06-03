@@ -7,5 +7,5 @@ const apiCollab = await fetch("https://dev.next.core.yatouze.com/api/yatouze/use
     let count=0
     response.data.map(x=>count=count+1)
  export const collabNav= count
-    
+  export const col=response
   

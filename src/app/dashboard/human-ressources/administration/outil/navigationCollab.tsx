@@ -17,7 +17,7 @@ export default function NavigationCollab(
            (<div className="flex">
             
             <button className="mr-4" onClick={()=>{nextpage.nextPage("previous")}}><img src="/left-arrow.svg" alt="left arrow" width={40} height={40} className="border rounded-full p-2 cursor-pointer"/></button>
-            <p>Page : {nextpage.page}</p>
+            <p className="self-center">Page : {nextpage.page}</p>
             <button className="ml-4" onClick={()=>{nextpage.nextPage("next")}}><img src="/right-arrow.svg" alt="right arrow" width={40} height={40} className='border rounded-full p-2 cursor-pointer'/></button>
           </div>):""
     
