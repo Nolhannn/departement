@@ -1,16 +1,32 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { ComposableMap, Geographies, Geography,ZoomableGroup } from "react-simple-maps";
 import { collabNav } from "../human-ressources/administration/api/collabNav";
 import NavigationCollab from "../human-ressources/administration/outil/navigationCollab";
 import { listePaysUser } from "./api/listepaysuser";
 
 export default function Map(){
-
 const [nb,setNb]=useState(1)
   const [collab,setCollab]=useState()
   const [loading,setLoading]=useState(true)
-  const [pays,setPays]=useState()
+  const [color,setColor]=useState({})
+  const [colorChoisi,setColorChoisi]=useState({})
+  const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
+
+  function handleZoomIn() {
+    console.log("zoom")
+    if (position.zoom >= 4) return;
+    setPosition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
+  }
+
+  function handleZoomOut() {
+    if (position.zoom <= 1) return;
+    setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
+  }
+
+  function handleMoveEnd(position) {
+    setPosition(position);
+  }
   useEffect(
     ()=>{
       async function fetchData(){
@@ -22,7 +38,11 @@ const [nb,setNb]=useState(1)
           )
           const response = await apiCollaborateurs.json()
           setCollab(response)
-          
+          const json = await fetch("public/file.json").then(r => r.json())
+
+         json.map(x=>x.objects.world.geometries.map(
+          y=>console.log(y.id)
+         ))
       
     
         }finally{
@@ -45,10 +65,18 @@ const [nb,setNb]=useState(1)
     
     }
     }
-  function setBg () {
-  const randomColor = Math.floor(Math.random()*16777215).toString(16)
-  console.log("#" + randomColor)
-  return "#" + randomColor
+  function setBg (x:string) {
+    
+    
+      const randomColor = Math.floor(Math.random()*16777215).toString(16)
+      /*if(color==false)    
+      setColorChoisi(y=> {return(
+        {...y, x:{
+          color :"#" + randomColor
+        }}
+        
+      )})*/
+  return "#" + randomColor //colorChoisi.x.color
 }
 
    if(loading){return "loading..."}
@@ -82,12 +110,43 @@ return(
     </div>
     
   </div>
-  <div className="w-250 outline-none m-auto -ml-8">
+  <div className="w-250 outline-none m-auto flex flex-col -ml-8">
+   <div className="flex justify-center">
+     <button onClick={handleZoomIn}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke="black"
+            strokeWidth="3"
+          >
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+        <button onClick={handleZoomOut}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke="black"
+            strokeWidth="3"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+    </div>
   <ComposableMap  projection="geoEqualEarth"
   projectionConfig={{
     scale: 150,
   }}
-  >
+  ><ZoomableGroup
+          zoom={position.zoom}
+          center={position.coordinates}
+        
+      >
     <Geographies geography="/features.json">
         {({ geographies }) =>
           geographies.map((geo) => {
@@ -101,7 +160,7 @@ return(
             pressed: { outline: "none",
                       stroke:"black"
             },
-          }} key={geo.rsmKey} fill={setBg()} name={geo.id} geography={geo} />
+          }} key={geo.rsmKey} fill={setBg(geo.properties.id)} name={geo.id} geography={geo} />
 
             }
               
@@ -118,6 +177,7 @@ return(
       
         }
       </Geographies>
+      </ZoomableGroup>
     </ComposableMap>
     </div>
   </div>
