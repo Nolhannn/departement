@@ -1,18 +1,25 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { ComposableMap, Geographies, Geography,ZoomableGroup } from "react-simple-maps";
-import { collabNav } from "../human-ressources/administration/api/collabNav";
-import NavigationCollab from "../human-ressources/administration/outil/navigationCollab";
 import { listePaysUser } from "./api/listepaysuser";
+ 
 
-export default function Map(){
+import NavigationCollab from "../../human-ressources/administration/outil/navigationCollab";
+import { collabNav } from "../../human-ressources/administration/api/collabNav";
+import { ComposableMap, Geographies, Geography,ZoomableGroup } from "react-simple-maps"; 
+import { keyGerry } from "@/app/components/key";
+
+export default function Map(
+  props :{
+    pickedColor : any
+  }
+){
 const [nb,setNb]=useState(1)
   const [collab,setCollab]=useState()
   const [loading,setLoading]=useState(true)
-  const [color,setColor]=useState({})
-  const [colorChoisi,setColorChoisi]=useState({})
+  const [color,setColor]=useState(props.pickedColor)
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
-
+  const[recherche,setRecherche]=useState("")
+  const [counter,setCounter]=useState(nb*10+5)
   function handleZoomIn() {
     console.log("zoom")
     if (position.zoom >= 4) return;
@@ -24,26 +31,27 @@ const [nb,setNb]=useState(1)
     setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
   }
 
-  function handleMoveEnd(position) {
-    setPosition(position);
-  }
   useEffect(
     ()=>{
       async function fetchData(){
         try{
-           const apiCollaborateurs = await fetch("https://dev.next.core.yatouze.com/api/yatouze/users/all?size=15&page="+nb,
+          let nbp = "&page="+nb
+          let size = recherche==""?"size=15":"size="
+           const apiCollaborateurs = await fetch("https://dev.next.core.yatouze.com/api/yatouze/users/all?"+size+nbp,
           {headers:{
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
+            Authorization:keyGerry
           }}
           )
           const response = await apiCollaborateurs.json()
           setCollab(response)
-          const json = await fetch("public/file.json").then(r => r.json())
-
-         json.map(x=>x.objects.world.geometries.map(
-          y=>console.log(y.id)
-         ))
-      
+          
+           setColor(x=>{
+            let h =props.pickedColor
+            console.log(props.pickedColor)
+            })
+           
+          setCounter(nb*10+5)
+        
     
         }finally{
           setLoading(false)
@@ -52,32 +60,34 @@ const [nb,setNb]=useState(1)
         
       }
       fetchData()
-    },[nb]
+    },[nb,recherche]
   )
-  
+  let c=0
   function next(n:string){
+    const limit = recherche==""?collabNav:c
       if(n==="next"){
-      if(nb<Math.ceil(collabNav/15))
+      if(nb<Math.ceil(limit/15))
       setNb(x=>x=x+1)
     }else{
       if(nb>1)
       setNb(x=>x=x-1)
-    
     }
     }
-  function setBg (x:string) {
-    
-    
-      const randomColor = Math.floor(Math.random()*16777215).toString(16)
-      /*if(color==false)    
-      setColorChoisi(y=> {return(
-        {...y, x:{
-          color :"#" + randomColor
-        }}
-        
-      )})*/
-  return "#" + randomColor //colorChoisi.x.color
-}
+ 
+ function getColor(country:string){
+    let c =""
+    Array.from(props.pickedColor).map(x=>{
+      
+      if(country==x.properties.name){
+       
+        c = x.color}
+    })
+    return  c
+ }
+ function showWindow(x:any){
+  const reh = x.properties.name
+  setRecherche(x=>x=reh)
+ }
 
    if(loading){return "loading..."}
   
@@ -91,7 +101,11 @@ return(
       <div className="flex-1">Date</div>
     </div>
     {collab.data.map((x)=>{
-      return(
+      
+      if(recherche==""){
+        
+      
+          return(
         <div className="flex gap-2 pt-3 pl-2 pb-3 border border-gray-400 bg-whte justify-between text-black">
           <div className="flex-1">{x.country?x.country:"null"}</div>
           <div className="flex-1">{x.city?x.city:"null"}</div>
@@ -104,13 +118,33 @@ return(
             }</div>
         </div>
       )
+      }else if(x.country==recherche){
+        c++
+        console.log(c)
+        if(c>=counter-10&&c<counter)
+        return(
+        <div className="flex gap-2 pt-3 pl-2 pb-3 border border-gray-400 bg-whte justify-between text-black">
+          <div className="flex-1">{x.country?x.country:"null"}</div>
+          <div className="flex-1">{x.city?x.city:"null"}</div>
+          <div className="flex-1">navigateur</div>
+          <div className="flex-1">{
+            (new Intl.DateTimeFormat('en-US', {year: '2-digit', month: '2-digit',day: '2-digit'}).format(new Date(x.createdAt)))
+            +" À "+
+            (new Intl.DateTimeFormat('en-US', {hour: '2-digit', minute:'2-digit', hour12:false}).format(new Date(x.createdAt)).replace(":","h"))
+
+            }</div>
+        </div>
+      )
+      }
+
+       
     })}
     <div className=" p-1 text-black flex justify-center ">
       <NavigationCollab  page={nb} nextPage={next}/>
     </div>
     
   </div>
-  <div className="w-250 outline-none m-auto flex flex-col -ml-8">
+  <div className="w-250 outline-none m-auto flex flex-col">
    <div className="flex justify-center">
      <button onClick={handleZoomIn}>
           <svg
@@ -125,6 +159,7 @@ return(
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
+        <button onClick={()=>{setRecherche("")}} className="text-black border rounded p-1 shadow-md shadonw-gray-500">Reset</button>
         <button onClick={handleZoomOut}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -150,31 +185,32 @@ return(
     <Geographies geography="/features.json">
         {({ geographies }) =>
           geographies.map((geo) => {
-           
             for(let i=0;i<listePaysUser.length;i++ ){
               
               if(geo.properties.name==listePaysUser[i])
-              return<Geography style={{
+                
+              return<Geography onClick={()=>{showWindow(geo)}}
+              style={{
             default: { outline: "none" },
             hover: { outline: "none" },
             pressed: { outline: "none",
                       stroke:"black"
             },
-          }} key={geo.rsmKey} fill={setBg(geo.properties.id)} name={geo.id} geography={geo} />
+          }} key={geo.rsmKey} fill={getColor(geo.properties.name)} name={geo.id} geography={geo} />
 
             }
               
              return(
-             <Geography
+             <Geography onClick={()=>{showWindow(geo)}}
              style={{
             default: { outline: "none" },
             hover: { outline: "none" },
             pressed: { outline: "none",
                       stroke:"#FF5533" },
-          }} key={geo.rsmKey} fill="#787878" name={geo.id} geography={geo} />
+          }} key={geo.rsmKey} fill={getColor(geo.properties.name)} name={geo.id} geography={geo} />
           )
         }) 
-      
+        
         }
       </Geographies>
       </ZoomableGroup>

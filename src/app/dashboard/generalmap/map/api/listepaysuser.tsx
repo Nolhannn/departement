@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { col } from "../../human-ressources/administration/api/collabNav"
+import { col } from "../../../human-ressources/administration/api/collabNav"
 
 export let listePaysUser=[]
 col.data.map((x)=>{

@@ -1,4 +1,5 @@
 "use client"
+import { keyGerry } from "@/app/components/key"
 import { FormEvent, useEffect, useState } from "react"
 export default function ModificationPro(
   listePro:{
@@ -26,7 +27,7 @@ export default function ModificationPro(
       const response = await fetch('https://dev.next.core.yatouze.com/api/yatouze/profiles/'+listePro.proID, {
         method: 'PUT',
         headers:{
-        Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s",
+        Authorization: keyGerry,
         'Content-Type': 'application/json',
         "accept":"*/*"
         },

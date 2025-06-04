@@ -8,6 +8,7 @@ import RandomIMG, { random } from "../outil/generatorImg"
 import Random from "../outil/generatorImg"
 import Detail from "../outil/detail"
 import { listeProfiles } from "../api/proNav"
+import { keyGerry } from "@/app/components/key"
 
 export default function Collaborateurs(){
   const [nb,setNb]=useState(1)
@@ -49,7 +50,8 @@ export default function Collaborateurs(){
         try{
            const apiCollaborateurs = await fetch("https://dev.next.core.yatouze.com/api/yatouze/users/all?size=6&page="+nb+dep+recherche,
           {headers:{
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
+            Authorization: keyGerry
+            
           }}
           )
           const response = await apiCollaborateurs.json()

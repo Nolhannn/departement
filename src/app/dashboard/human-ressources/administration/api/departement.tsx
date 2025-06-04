@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import BoutonPro from "../outil/boutonPro"
 import { proNav } from "./proNav"
+import { keyGerry } from "@/app/components/key"
 export default function List(
   liste:{
     
@@ -18,7 +19,7 @@ export default function List(
         async function fetchData(){
             try{const apiDepart = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10",
           {headers:{
-            Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
+            Authorization:  keyGerry
           }})
           const variab=  await apiDepart.json()
           setDepart(variab)

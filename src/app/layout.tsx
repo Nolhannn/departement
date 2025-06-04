@@ -41,7 +41,7 @@ export default function RootLayout({
              <Arrow  redirectManual={variableAccess}/>
           <button onClick={()=>{
             return(
-              router.push("/dashboard/map")
+              router.push("/dashboard/generalmap")
             )
               }} className="flex cursor-pointer  gap-5">
             <p>Map</p>

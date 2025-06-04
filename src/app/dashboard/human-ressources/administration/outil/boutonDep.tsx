@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react"
 import { depNav } from "../api/depNav"
+import { keyGerry } from "@/app/components/key"
 export default function BoutonDep(
   listeDep:{
     active : string
@@ -30,7 +31,7 @@ export default function BoutonDep(
       const response = await fetch('https://dev.next.core.yatouze.com/api/yatouze/departments', {
         method: 'POST',
         headers:{
-        Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s",
+        Authorization: keyGerry,
         'Content-Type': 'application/json',
         "accept":"*/*"
         },

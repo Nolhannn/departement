@@ -7,6 +7,7 @@ import Rep from '../outil/counter'
 import { Suspense, useEffect, useState } from 'react'
 import Delete from '../outil/delete'
 import Modification from '../outil/modification'
+import { keyGerry } from '@/app/components/key'
 
 type Depart = {
   id : number
@@ -52,7 +53,7 @@ export  default function Departement(){
         try{
         let apiDepartement = await fetch("https://dev.next.core.yatouze.com/api/yatouze/departments?size=10&page="+nb+alphabet+recherche,
         {headers:{
-          Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE2OCwiZW1haWwiOiJnZXJyeS5nb3ViYWxhbkB5YXRvdXplLmNvbSIsImlhdCI6MTc0ODU5NjQzNSwiZXhwIjoxNzQ5MDI4NDM1fQ.nMGU6qM-NRotV6m7hHdhzUjp7Git6zHPkOe8qzNfu5s"
+          Authorization: keyGerry
         }}
         )
         const response = await apiDepartement.json()
