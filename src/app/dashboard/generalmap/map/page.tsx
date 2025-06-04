@@ -7,6 +7,7 @@ import NavigationCollab from "../../human-ressources/administration/outil/naviga
 import { collabNav } from "../../human-ressources/administration/api/collabNav";
 import { ComposableMap, Geographies, Geography,ZoomableGroup } from "react-simple-maps"; 
 import { keyGerry } from "@/app/components/key";
+import WindowPays from "./components/windowPays";
 
 export default function Map(
   props :{
@@ -20,6 +21,8 @@ const [nb,setNb]=useState(1)
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
   const[recherche,setRecherche]=useState("")
   const [counter,setCounter]=useState(nb*10+5)
+  const[show,setShow]=useState(false)
+  const[selectedPays,setSelectedPays]=useState()
   function handleZoomIn() {
     console.log("zoom")
     if (position.zoom >= 4) return;
@@ -85,8 +88,17 @@ const [nb,setNb]=useState(1)
     return  c
  }
  function showWindow(x:any){
+  let v
   const reh = x.properties.name
+  setShow(x=>x=true)
   setRecherche(x=>x=reh)
+   Array.from(props.pickedColor).map(y=>{
+      
+      if(x.properties.name==y.properties.name){
+       v=y
+      }
+    })
+  setSelectedPays(v)
   //setNb(x=>x=1)
  }
 
@@ -160,7 +172,9 @@ return(
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
-        <button onClick={()=>{setRecherche("")}} className="text-black border rounded p-1 shadow-md shadonw-gray-500">Reset</button>
+        <button onClick={()=>{
+          setShow(x=>x=false)
+          setRecherche("")}} className="text-black border rounded p-1 shadow-md shadonw-gray-500">Reset</button>
         <button onClick={handleZoomOut}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -173,6 +187,7 @@ return(
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
+       { show? <WindowPays liste={selectedPays}/>:""}
     </div>
   <ComposableMap  projection="geoEqualEarth"
   projectionConfig={{
