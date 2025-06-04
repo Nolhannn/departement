@@ -87,6 +87,7 @@ const [nb,setNb]=useState(1)
  function showWindow(x:any){
   const reh = x.properties.name
   setRecherche(x=>x=reh)
+  //setNb(x=>x=1)
  }
 
    if(loading){return "loading..."}
@@ -121,7 +122,7 @@ return(
       }else if(x.country==recherche){
         c++
         console.log(c)
-        if(c>=counter-10&&c<counter)
+        if(c>=counter-10&&c<counter ||nb==1&&c<counter )
         return(
         <div className="flex gap-2 pt-3 pl-2 pb-3 border border-gray-400 bg-whte justify-between text-black">
           <div className="flex-1">{x.country?x.country:"null"}</div>
