@@ -92,6 +92,7 @@ const [nb,setNb]=useState(1)
   const reh = x.properties.name
   setShow(x=>x=true)
   setRecherche(x=>x=reh)
+  setNb(1)
    Array.from(props.pickedColor).map(y=>{
       
       if(x.properties.name==y.properties.name){
@@ -105,8 +106,9 @@ const [nb,setNb]=useState(1)
    if(loading){return "loading..."}
   
 return(
- <div className=" flex border shadow-md shadow-gray-500 h-min ">
-  <div className="flex flex-col w-150">
+ <div className=" flex border shadow-md shadow-gray-500 h-[90vh]">
+  <div className="flex flex-col w-150 justify-between  ">
+    <div className="overflow-y-auto"> 
     <div className="flex gap-2 border border-gray-400 bg-whte justify-between text-blue-500">
       <div className="flex-1">Pays</div>
       <div className="flex-1">Ville</div>
@@ -152,7 +154,8 @@ return(
 
        
     })}
-    <div className=" p-1 text-black flex justify-center ">
+    </div>
+    <div className=" p-1 text-black flex justify-center align-bottom">
       <NavigationCollab  page={nb} nextPage={next}/>
     </div>
     
